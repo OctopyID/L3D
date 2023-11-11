@@ -1,0 +1,49 @@
+{
+    "name": "octopyid/l3d",
+    "description": "Laravel Domain Design Pattern",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Supian M",
+            "email": "supianidz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.31"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.8",
+        "orchestra/testbench": "^8.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopy\\L3D\\": "src/"
+        },
+        "files": [
+            "src/Helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Octopy\\Tests\\": "tests/",
+            "App\\": "tests/Skeleton/app/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Octopy\\L3D\\Providers\\DomainServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/testbench package:test"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
