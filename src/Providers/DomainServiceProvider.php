@@ -3,7 +3,6 @@
 namespace Octopy\L3D\Providers;
 
 use Exception;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Octopy\L3D\Domain;
 
@@ -19,13 +18,14 @@ class DomainServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/domain.php', 'domain'
         );
 
+        $this->app->alias(Domain::class, 'domain');
         $this->app->singleton(Domain::class, function () {
-            return new Domain(App::path(
-                'Domain'
+            return new Domain(config(
+                'domain.path'
             ));
         });
 
-        $domain = $this->app->make(Domain::class);
+        $domain = $this->app->make('domain');
 
         $this->loadMigrationsFrom($domain->getMigrationPaths());
 

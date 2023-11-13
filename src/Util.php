@@ -7,15 +7,11 @@ use Illuminate\Support\Facades\App;
 final class Util
 {
     /**
-     * @param  mixed $file
+     * @param  string $file
      * @return string
      */
-    public static function getClass(mixed $file) : string
+    public static function getClass(string $file) : string
     {
-        if ($file instanceof SplFileInfo) {
-            $file = $file->getPathname();
-        }
-
         return str($file)->replace(App::path(), '')->replace('.php', '')->replace('/', '\\')->trim('\\')->prepend(App::getNamespace());
     }
 }

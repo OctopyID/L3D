@@ -3,7 +3,7 @@
 namespace Octopy\L3D\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Facades\App;
+use Octopy\L3D\Support\Facades\Domain;
 use Symfony\Component\Console\Input\InputOption;
 
 class DomainMakeCommand extends GeneratorCommand
@@ -27,7 +27,7 @@ class DomainMakeCommand extends GeneratorCommand
      */
     public function handle() : mixed
     {
-        $location = App::path('Domain/' . $this->getNameInput());
+        $location = Domain::path($this->getNameInput());
 
         if ($this->files->isDirectory($location) && (! $this->hasOption('force') || ! $this->option('force'))) {
             return $this->components->error($this->type . ' already exists.');
