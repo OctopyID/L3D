@@ -47,10 +47,10 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
     /**
      * @return string
      */
-    protected function rootNamespace() : string
-    {
-        return parent::rootNamespace() . 'Domain\\' . $this->domain;
-    }
+//    protected function rootNamespace() : string
+//    {
+//        return parent::rootNamespace() . 'Domain\\' . $this->domain;
+//    }
 
     /**
      * @return array

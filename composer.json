@@ -28,7 +28,7 @@
     "autoload-dev": {
         "psr-4": {
             "Octopy\\Tests\\": "tests/",
-            "App\\": "tests/Skeleton/app/"
+            "App\\": "tests/Laravel/app/"
         }
     },
     "extra": {

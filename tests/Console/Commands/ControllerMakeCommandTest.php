@@ -13,7 +13,7 @@ class ControllerMakeCommandTest extends TestCase
     protected function tearDown() : void
     {
         File::delete([
-            domain_path('Foo/Http/Controllers/FooController.php'),
+//            domain_path('Foo/Http/Controllers/FooController.php'),
         ]);
 
         parent::tearDown();
