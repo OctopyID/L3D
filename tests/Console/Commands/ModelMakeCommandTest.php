@@ -5,7 +5,7 @@ namespace Octopy\Tests\Console\Commands;
 use Illuminate\Support\Facades\File;
 use Octopy\Tests\TestCase;
 
-class ControllerMakeCommandTest extends TestCase
+class ModelMakeCommandTest extends TestCase
 {
     /**
      * @return void
@@ -13,26 +13,26 @@ class ControllerMakeCommandTest extends TestCase
     protected function tearDown() : void
     {
         File::delete([
-            domain_path('Foo/Http/Controllers/FooController.php'),
+            domain_path('Foo/Models/Foo.php'),
         ]);
 
         parent::tearDown();
     }
 
     /**
-     * @test
+     * @return void
      */
-    public function ItCanCreateController() : void
+    public function testItCanCreateModel()
     {
         $this
-            ->artisan('make:controller', [
-                'name'     => 'FooController',
+            ->artisan('make:model', [
+                'name'     => 'Foo',
                 '--domain' => 'Foo',
             ])
             ->assertExitCode(0);
 
         $this->assertFileExists(domain_path(
-            'Foo/Http/Controllers/FooController.php'
+            'Foo/Models/Foo.php'
         ));
     }
 }

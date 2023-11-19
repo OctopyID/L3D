@@ -5,6 +5,7 @@ namespace Octopy\L3D\Providers;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
+use Octopy\L3D\Console\Commands\ModelMakeCommand;
 use Octopy\L3D\Domain;
 
 class DomainServiceProvider extends ServiceProvider
@@ -35,6 +36,7 @@ class DomainServiceProvider extends ServiceProvider
         }
 
         $this->commands([
+            \Octopy\L3D\Console\Commands\ModelMakeCommand::class,
             \Octopy\L3D\Console\Commands\DomainMakeCommand::class,
             \Octopy\L3D\Console\Commands\ControllerMakeCommand::class,
         ]);

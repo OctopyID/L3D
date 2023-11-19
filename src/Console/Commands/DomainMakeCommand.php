@@ -2,6 +2,7 @@
 
 namespace Octopy\L3D\Console\Commands;
 
+use Exception;
 use Illuminate\Console\GeneratorCommand;
 use Octopy\L3D\Support\Facades\Domain;
 use Symfony\Component\Console\Input\InputOption;
@@ -23,9 +24,9 @@ class DomainMakeCommand extends GeneratorCommand
     protected $type = 'Domain';
 
     /**
-     * @return mixed
+     * @throws Exception
      */
-    public function handle() : mixed
+    public function handle()
     {
         $location = Domain::path($this->getNameInput());
 
@@ -33,7 +34,26 @@ class DomainMakeCommand extends GeneratorCommand
             return $this->components->error($this->type . ' already exists.');
         }
 
-        $this->files->makeDirectory($location, 0777, true, true);
+        $paths = [
+            'Models',
+            'Providers',
+            'Http/Middleware',
+            'Http/Controllers',
+        ];
+
+        foreach ($paths as $path) {
+            $this->files->makeDirectory(sprintf('%s/%s', $location, $path), 0755, true, true);
+        }
+
+        $files = [
+            'web.php',
+            'api.php',
+        ];
+
+        foreach ($files as $file) {
+            $this->files->put(sprintf('%s/%s', $location, $file), $this->getStub());
+        }
+
         $this->components->info(sprintf(
             '%s [%s] created successfully.', $this->type, $this->getNameInput()
         ));

@@ -10,8 +10,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "laravel/framework": "^10.31"
+        "php": "^8.1"
     },
     "require-dev": {
         "nunomaduro/collision": "^7.8",

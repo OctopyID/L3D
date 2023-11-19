@@ -2,22 +2,21 @@
 
 namespace Octopy\L3D\Console\Commands;
 
-use Exception;
 use Octopy\L3D\Console\Commands\Concerns\HasDomain;
 use Octopy\L3D\Console\Commands\Concerns\HasGetPath;
 use Octopy\L3D\Support\Facades\Domain;
 use function Laravel\Prompts\select;
 
-class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCommand
+class ModelMakeCommand extends \Illuminate\Foundation\Console\ModelMakeCommand
 {
     use HasGetPath, HasDomain;
 
-    protected $name = 'make:controller';
+    protected $name = 'make:model';
 
     /**
      * @var string|null
      */
-    private string|null $domain;
+    protected string|null $domain;
 
     /**
      * @throws Exception
@@ -42,6 +41,6 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
      */
     protected function rootNamespace() : string
     {
-        return sprintf('%sDomain\%s', parent::rootNamespace(), $this->domain);
+        return sprintf('%sDomain\%s\Models', parent::rootNamespace(), $this->domain);
     }
 }
