@@ -22,7 +22,7 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
     /**
      * @throws Exception
      */
-    public function handle()
+    public function handle() : void
     {
         $this->domain = $this->option('domain');
 
@@ -31,7 +31,8 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
         }
 
         if (! is_dir(domain_path($this->domain))) {
-            return $this->components->error(sprintf('Domain [%s] does not exists.', $this->domain));
+            $this->components->error(sprintf('Domain [%s] does not exists.', $this->domain));
+            exit;
         }
 
         parent::handle();
@@ -42,6 +43,6 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
      */
     protected function rootNamespace() : string
     {
-        return sprintf('%sDomain\%s', parent::rootNamespace(), $this->domain);
+        return sprintf('%s%sDomain\%s', config('domain.path'), parent::rootNamespace(), $this->domain);
     }
 }

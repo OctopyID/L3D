@@ -31,7 +31,8 @@ class DomainMakeCommand extends GeneratorCommand
         $location = Domain::path($this->getNameInput());
 
         if ($this->files->isDirectory($location) && (! $this->hasOption('force') || ! $this->option('force'))) {
-            return $this->components->error($this->type . ' already exists.');
+            $this->components->error($this->type . ' already exists.');
+            exit;
         }
 
         $this

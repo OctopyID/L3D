@@ -2,6 +2,7 @@
 
 namespace Octopy\L3D\Console\Commands;
 
+use Exception;
 use Octopy\L3D\Console\Commands\Concerns\HasDomain;
 use Octopy\L3D\Console\Commands\Concerns\HasGetPath;
 use Octopy\L3D\Support\Facades\Domain;
@@ -21,7 +22,7 @@ class ModelMakeCommand extends \Illuminate\Foundation\Console\ModelMakeCommand
     /**
      * @throws Exception
      */
-    public function handle()
+    public function handle() : void
     {
         $this->domain = $this->option('domain');
 
@@ -30,7 +31,8 @@ class ModelMakeCommand extends \Illuminate\Foundation\Console\ModelMakeCommand
         }
 
         if (! is_dir(domain_path($this->domain))) {
-            return $this->components->error(sprintf('Domain [%s] does not exists.', $this->domain));
+            $this->components->error(sprintf('Domain [%s] does not exists.', $this->domain));
+            exit;
         }
 
         parent::handle();
@@ -41,6 +43,6 @@ class ModelMakeCommand extends \Illuminate\Foundation\Console\ModelMakeCommand
      */
     protected function rootNamespace() : string
     {
-        return sprintf('%sDomain\%s\Models', parent::rootNamespace(), $this->domain);
+        return sprintf('%s%s\%s\Models', config('domain.path'), parent::rootNamespace(), $this->domain);
     }
 }

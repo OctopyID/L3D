@@ -89,6 +89,6 @@ class Finder
      */
     private function getFilteredDomains(string $type) : Collection
     {
-        return $this->getDomains()->filter(fn($domain) => ! is_null($domain[$type]));
+        return $this->getDomains()->filter(fn($domain) : bool => ! is_null($domain[$type]));
     }
 }

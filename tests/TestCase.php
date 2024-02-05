@@ -19,10 +19,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         App::setBasePath(realpath(
             __DIR__ . '/Laravel'
         ));
-
-        config([
-            'domain.path' => App::path('Domain'),
-        ]);
     }
 
     /**

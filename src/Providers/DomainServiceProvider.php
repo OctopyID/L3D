@@ -5,7 +5,6 @@ namespace Octopy\L3D\Providers;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
-use Octopy\L3D\Console\Commands\ModelMakeCommand;
 use Octopy\L3D\Domain;
 
 class DomainServiceProvider extends ServiceProvider
@@ -81,7 +80,7 @@ class DomainServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function registerPublishing() : void
+    private function registerPublishing() : void
     {
         $this->publishes([__DIR__ . '/../../config/domain.php' => config_path('domain.php')], 'domain');
     }
