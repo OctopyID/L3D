@@ -20,6 +20,10 @@ class DomainServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/domain.php', 'domain'
         );
 
+        if ($this->app->runningInConsole()) {
+            $this->registerPublishing();
+        }
+
         $this
             ->bindToContainer()
             ->registerDomains()
@@ -72,5 +76,13 @@ class DomainServiceProvider extends ServiceProvider
         });
 
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerPublishing() : void
+    {
+        $this->publishes([__DIR__ . '/../../config/domain.php' => config_path('domain.php')], 'domain');
     }
 }
