@@ -43,6 +43,6 @@ class ControllerMakeCommand extends \Illuminate\Routing\Console\ControllerMakeCo
      */
     protected function rootNamespace() : string
     {
-        return sprintf('%s%sDomain\%s', config('domain.path'), parent::rootNamespace(), $this->domain);
+         return sprintf('%s%s\%s\Models', parent::rootNamespace(), str(config('domain.path'))->afterLast('/'), $this->domain);
     }
 }

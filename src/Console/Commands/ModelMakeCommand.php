@@ -43,6 +43,6 @@ class ModelMakeCommand extends \Illuminate\Foundation\Console\ModelMakeCommand
      */
     protected function rootNamespace() : string
     {
-        return sprintf('%s%s\%s\Models', config('domain.path'), parent::rootNamespace(), $this->domain);
+         return sprintf('%s%s\%s\Models', parent::rootNamespace(), str(config('domain.path'))->afterLast('/'), $this->domain);
     }
 }
