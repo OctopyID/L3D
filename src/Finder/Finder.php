@@ -10,14 +10,14 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Finder
 {
-    protected string $path;
+    protected Collection $domains;
 
     /**
      * @param  string $path
      */
-    public function __construct(string $path)
+    public function __construct(protected string $path)
     {
-        $this->path = $path;
+        $this->domains = collect([]);
     }
 
     /**
@@ -27,7 +27,11 @@ class Finder
     public function getDomains() : Collection
     {
         if (! is_dir($this->path)) {
-            return collect([]);
+            return $this->domains;
+        }
+
+        if ($this->domains->isNotEmpty()) {
+            return $this->domains;
         }
 
         $iterable = collect(SymfonyFinder::create()->in($this->path)->directories()->depth(0))->map(function ($row) {
@@ -59,6 +63,32 @@ class Finder
             }
         }
 
-        return collect($domains);
+        return $this->domains = collect($domains);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getMigrationPaths() : array
+    {
+        return $this->getFilteredDomains('migration')->map(fn($domain) : string => $domain['migration'])->toArray();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getServiceProviders() : array
+    {
+        return $this->getFilteredDomains('providers')->flatMap(fn($domain) : array => $domain['providers'])->toArray();
+    }
+
+    /**
+     * @param  string $type
+     * @return Collection
+     * @throws Exception
+     */
+    private function getFilteredDomains(string $type) : Collection
+    {
+        return $this->getDomains()->filter(fn($domain) : bool => ! is_null($domain[$type]));
     }
 }

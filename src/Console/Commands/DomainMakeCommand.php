@@ -2,8 +2,9 @@
 
 namespace Octopy\L3D\Console\Commands;
 
+use Exception;
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Facades\App;
+use Octopy\L3D\Support\Facades\Domain;
 use Symfony\Component\Console\Input\InputOption;
 
 class DomainMakeCommand extends GeneratorCommand
@@ -23,28 +24,32 @@ class DomainMakeCommand extends GeneratorCommand
     protected $type = 'Domain';
 
     /**
-     * @return mixed
+     * @throws Exception
      */
-    public function handle() : mixed
+    public function handle()
     {
-        $location = App::path('Domain/' . $this->getNameInput());
+        $location = Domain::path($this->getNameInput());
 
         if ($this->files->isDirectory($location) && (! $this->hasOption('force') || ! $this->option('force'))) {
-            return $this->components->error($this->type . ' already exists.');
+            $this->components->error($this->type . ' already exists.');
+            exit;
         }
 
-        $this->files->makeDirectory($location, 0777, true, true);
+        $this
+            ->createDirectories($location)
+            ->createFiles($location);
+
         $this->components->info(sprintf(
             '%s [%s] created successfully.', $this->type, $this->getNameInput()
         ));
     }
 
     /**
-     * @return void
+     * Get the stub file for the generator.
      */
     protected function getStub()
     {
-        // TODO: Implement getStub() method.
+        //
     }
 
     /**
@@ -55,5 +60,51 @@ class DomainMakeCommand extends GeneratorCommand
         return [
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the controller already exists'],
         ];
+    }
+
+    /**
+     * @param  string $location
+     * @return $this
+     */
+    private function createDirectories(string $location) : self
+    {
+        $paths = [
+            'Models',
+            'Providers',
+            'Http/Middleware',
+            'Http/Controllers',
+            'Database/Migrations',
+            'Database/Factories',
+            'Database/Seeders',
+        ];
+
+        foreach ($paths as $path) {
+            $this->files->makeDirectory(sprintf('%s/%s', $location, $path), 0755, true, true);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param  string $location
+     * @return void
+     */
+    private function createFiles(string $location) : void
+    {
+        $files = [
+            'web.php',
+            'api.php',
+        ];
+
+        $content = <<<EOT
+            <?php
+            
+            use Illuminate\Support\Facades\Route;
+            
+            EOT;
+
+        foreach ($files as $file) {
+            $this->files->put(sprintf('%s/%s', $location, $file), $content);
+        }
     }
 }

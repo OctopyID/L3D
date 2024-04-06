@@ -17,12 +17,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         App::setBasePath(realpath(
-            __DIR__ . '/Skeleton'
+            __DIR__ . '/Laravel'
         ));
-
-        config([
-            'domain.path' => App::path('Domain'),
-        ]);
     }
 
     /**
@@ -40,8 +36,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
             }
 
             if (! in_array($domain, $excludes)) {
-                if (is_dir(App::path('Domain/' . $domain))) {
-                    File::deleteDirectory(App::path('Domain/' . $domain));
+                if (is_dir(domain_path($domain))) {
+                    File::deleteDirectory(domain_path(
+                        $domain
+                    ));
                 }
             }
         }

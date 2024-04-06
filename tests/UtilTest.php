@@ -11,6 +11,8 @@ class UtilTest extends TestCase
      */
     public function getClass() : void
     {
-        $this->assertSame('App\\Http\\Controllers\\HomeController', Util::getClass('/Http/Controllers/HomeController.php'));
+        $this->assertSame('App\\Http\\Controllers\\HomeController', Util::getClass(
+            '/Http/Controllers/HomeController.php'
+        ));
     }
 }

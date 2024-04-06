@@ -15,6 +15,6 @@ class Domain extends Facade
      */
     protected static function getFacadeAccessor() : string
     {
-        return \Octopy\L3D\Domain::class;
+        return 'domain';
     }
 }

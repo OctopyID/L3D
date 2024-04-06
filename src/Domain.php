@@ -3,8 +3,6 @@
 namespace Octopy\L3D;
 
 use Exception;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\App;
 use Octopy\L3D\Cache\Cache;
 use Octopy\L3D\Finder\Finder;
 
@@ -52,7 +50,7 @@ class Domain
      */
     public function getMigrationPaths() : array
     {
-        return $this->getFilteredDomains('migration')->map(fn($domain) : string => $domain['migration'])->toArray();
+        return $this->finder->getMigrationPaths();
     }
 
     /**
@@ -60,16 +58,6 @@ class Domain
      */
     public function getServiceProviders() : array
     {
-        return $this->getFilteredDomains('providers')->flatMap(fn($domain) : array => $domain['providers'])->toArray();
-    }
-
-    /**
-     * @param  string $type
-     * @return Collection
-     * @throws Exception
-     */
-    private function getFilteredDomains(string $type) : Collection
-    {
-        return $this->finder->getDomains()->filter(fn($domain) => ! is_null($domain[$type]));
+        return $this->finder->getServiceProviders();
     }
 }

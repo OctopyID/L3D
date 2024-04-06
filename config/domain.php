@@ -13,5 +13,5 @@ return [
     |
     */
 
-    'path' => App::path('Domain'),
+    'path' => app_path('Domain')
 ];
