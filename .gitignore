@@ -9,4 +9,4 @@ vendor
 composer.lock
 
 # Cache
-*.cachexw
+*.cache
