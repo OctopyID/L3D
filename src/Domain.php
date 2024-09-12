@@ -2,6 +2,8 @@
 
 namespace Octopy\L3D;
 
+use Illuminate\Support\ServiceProvider;
+use Octopy\L3D\Finder\Finder as DomainFinder;
 use SplFileInfo;
 
 class Domain
@@ -28,5 +30,13 @@ class Domain
     public function path() : string
     {
         return domain_path($this->domain);
+    }
+
+    /**
+     * @return array<ServiceProvider>
+     */
+    public function providers() : array
+    {
+        return  (new DomainFinder($this->path()))->findProviders();
     }
 }

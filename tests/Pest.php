@@ -14,6 +14,7 @@
 use Octopy\Tests\TestCase;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use function Octopy\L3D\domain_path;
+use function Orchestra\Testbench\package_path;
 
 pest()->extend(TestCase::class);
 
@@ -43,11 +44,11 @@ expect()->extend('toEqualDomainOf', function (string $domain) {
 |
 */
 
-function create_fake_domain(string|array $domain) : void
+function create_fake_domain(string|array $domain, bool $provider = false) : void
 {
     if (is_array($domain)) {
         foreach ($domain as $value) {
-            create_fake_domain($value);
+            create_fake_domain($value, $provider);
         }
 
         return;
@@ -56,9 +57,27 @@ function create_fake_domain(string|array $domain) : void
     if (! is_dir(domain_path($domain))) {
         mkdir(domain_path($domain), recursive: true);
     }
+
+    if ($provider) {
+        if (! is_dir(domain_path(sprintf('%s/Providers', $domain)))) {
+            mkdir(domain_path(sprintf('%s/Providers', $domain)), recursive: true);
+        }
+
+        $stub = file_get_contents(package_path('laravel/stubs/ServiceProvider.stub'));
+
+        file_put_contents(
+            domain_path(sprintf('%s/Providers/%sServiceProvider.php', $domain, $domain)), str($stub)->replace('{{DOMAIN}}', $domain)
+        );
+    }
 }
 
 function remove_fake_domain() : void
 {
-    collect(SymfonyFinder::create()->in(domain_path('/'))->directories())->each(fn(string $domain) => rmdir($domain));
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator(domain_path('/'), FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST
+    );
+
+    foreach ($files as $file) {
+        is_dir($file->getRealPath()) ? rmdir($file) : unlink($file);
+    }
 }

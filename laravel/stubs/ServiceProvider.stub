@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Domain\{{DOMAIN}}\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class {{DOMAIN}}ServiceProvider extends ServiceProvider
+{
+    //
+}

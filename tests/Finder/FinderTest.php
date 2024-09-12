@@ -26,5 +26,4 @@ it('should return array of domains', function () {
         new Domain('C'),
     ]);
 
-    remove_fake_domain();
 });

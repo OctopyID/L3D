@@ -2,7 +2,10 @@
 
 namespace Octopy\L3D\Finder;
 
+use Illuminate\Support\ServiceProvider;
+use NunoMaduro\Collision\Provider;
 use Octopy\L3D\Domain;
+use Octopy\L3D\Util;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Finder
@@ -32,5 +35,21 @@ class Finder
         }
 
         return $domains;
+    }
+
+    /**
+     * @return array
+     */
+    public function findProviders() : array
+    {
+        $providers = [];
+        foreach ($this->finder->in($this->location)->files() as $provider) {
+            $provider = Util::getClass($provider);
+            if (is_subclass_of($provider, ServiceProvider::class)) {
+                $providers[] = $provider;
+            }
+        }
+
+        return $providers;
     }
 }
