@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'path' => \Illuminate\Support\Facades\App::path('Domain'),
+    'path' => Illuminate\Support\Facades\App::path('Domain'),
 ];
