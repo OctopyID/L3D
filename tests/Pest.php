@@ -11,7 +11,11 @@
 |
 */
 
-pest()->extend(\Octopy\Tests\TestCase::class);
+use Octopy\Tests\TestCase;
+use Symfony\Component\Finder\Finder as SymfonyFinder;
+use function Octopy\L3D\domain_path;
+
+pest()->extend(TestCase::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +28,8 @@ pest()->extend(\Octopy\Tests\TestCase::class);
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+expect()->extend('toEqualDomainOf', function (string $domain) {
+    return $this->toEqual(new \Octopy\L3D\Domain($domain));
 });
 
 /*
@@ -38,3 +42,23 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
+
+function create_fake_domain(string|array $domain) : void
+{
+    if (is_array($domain)) {
+        foreach ($domain as $value) {
+            create_fake_domain($value);
+        }
+
+        return;
+    }
+
+    if (! is_dir(domain_path($domain))) {
+        mkdir(domain_path($domain), recursive: true);
+    }
+}
+
+function remove_fake_domain() : void
+{
+    collect(SymfonyFinder::create()->in(domain_path('/'))->directories())->each(fn(string $domain) => rmdir($domain));
+}

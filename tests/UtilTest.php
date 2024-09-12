@@ -2,10 +2,21 @@
 
 namespace Octopy\Tests;
 
+use Octopy\L3D\Domain;
 use Octopy\L3D\Util;
+use function Octopy\L3D\domain;
+use function Octopy\L3D\domain_path;
 
-it('convert path to class name', function () {
+test('convert path to class name', function () {
     expect('App\\Http\\Controllers\\HomeController')->toBe(Util::getClass(
         app_path('Http/Controllers/HomeController.php')
     ));
+});
+
+test('returns an instance of the Domain class', function () {
+    expect(domain('A'))->toBeInstanceOf(Domain::class);
+});
+
+test('return correct path', function () {
+    expect(domain_path('A///B'))->toBe(app()->path('Domain/A/B'));
 });

@@ -27,6 +27,6 @@ class Domain
      */
     public function path() : string
     {
-        return config('domain.path') . '/' . $this->domain;
+        return domain_path($this->domain);
     }
 }
