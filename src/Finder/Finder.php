@@ -4,7 +4,7 @@ namespace Octopy\L3D\Finder;
 
 use Illuminate\Support\ServiceProvider;
 use NunoMaduro\Collision\Provider;
-use Octopy\L3D\Domain;
+use Octopy\L3D\DomainInfo;
 use Octopy\L3D\Util;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
@@ -21,7 +21,7 @@ class Finder
     }
 
     /**
-     * @return Domain[]
+     * @return DomainInfo[]
      */
     public function findDomains() : array
     {
@@ -31,7 +31,7 @@ class Finder
 
         $domains = [];
         foreach ($this->finder->in($this->location)->directories()->depth(0) as $domain) {
-            $domains[] = new Domain($domain->getFilename());
+            $domains[] = new DomainInfo($domain->getFilename());
         }
 
         return $domains;

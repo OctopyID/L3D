@@ -2,7 +2,7 @@
 
 namespace Octopy\Tests\Finder;
 
-use Octopy\L3D\Domain;
+use Octopy\L3D\DomainInfo;
 use Octopy\L3D\Finder\Finder;
 
 beforeEach(function () {
@@ -21,9 +21,9 @@ it('should return array of domains', function () {
     ));
 
     expect($finder->findDomains())->toEqualCanonicalizing([
-        new Domain('A'),
-        new Domain('B'),
-        new Domain('C'),
+        new DomainInfo('A'),
+        new DomainInfo('B'),
+        new DomainInfo('C'),
     ]);
 
 });

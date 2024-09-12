@@ -2,7 +2,7 @@
 
 namespace Octopy\Tests;
 
-use Octopy\L3D\Domain;
+use Octopy\L3D\DomainInfo;
 use Octopy\L3D\Util;
 use function Octopy\L3D\domain;
 use function Octopy\L3D\domain_path;
@@ -14,7 +14,7 @@ test('convert path to class name', function () {
 });
 
 test('returns an instance of the Domain class', function () {
-    expect(domain('A'))->toBeInstanceOf(Domain::class);
+    expect(domain('A'))->toBeInstanceOf(DomainInfo::class);
 });
 
 test('return correct path', function () {

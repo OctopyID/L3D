@@ -5,11 +5,11 @@ namespace Octopy\L3D;
 if (! function_exists('domain')) {
     /**
      * @param  string $name
-     * @return Domain
+     * @return DomainInfo
      */
-    function domain(string $name) : Domain
+    function domain(string $name) : DomainInfo
     {
-        return new Domain($name);
+        return new DomainInfo($name);
     }
 }
 

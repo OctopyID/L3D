@@ -30,7 +30,7 @@ pest()->extend(TestCase::class);
 */
 
 expect()->extend('toEqualDomainOf', function (string $domain) {
-    return $this->toEqual(new \Octopy\L3D\Domain($domain));
+    return $this->toEqual(new \Octopy\L3D\DomainInfo($domain));
 });
 
 /*

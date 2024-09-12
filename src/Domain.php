@@ -2,41 +2,39 @@
 
 namespace Octopy\L3D;
 
-use Illuminate\Support\ServiceProvider;
-use Octopy\L3D\Finder\Finder as DomainFinder;
-use SplFileInfo;
+use Octopy\L3D\Finder\Finder;
 
 class Domain
 {
+    protected Finder $finder;
+
     /**
-     * @param  string $domain
+     * Domain constructor
      */
-    public function __construct(protected string $domain)
+    public function __construct()
     {
-        //
+        $this->finder = new Finder(config('domain.path'));
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function name() : string
+    public function domains() : array
     {
-        return $this->domain;
+        return $this->finder->findDomains();
     }
 
     /**
-     * @return string
-     */
-    public function path() : string
-    {
-        return domain_path($this->domain);
-    }
-
-    /**
-     * @return array<ServiceProvider>
+     * @return array
      */
     public function providers() : array
     {
-        return  (new DomainFinder($this->path()))->findProviders();
+        $providers = [];
+
+        collect($this->domains())->each(function (DomainInfo $domain) use (&$providers) {
+            $providers[] = $domain->providers();
+        });
+
+        return $providers;
     }
 }
