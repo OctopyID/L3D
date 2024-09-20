@@ -2,7 +2,9 @@
 
 namespace Octopy\L3D\Providers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Octopy\L3D\Domain;
 
 class DomainServiceProvider extends ServiceProvider
 {

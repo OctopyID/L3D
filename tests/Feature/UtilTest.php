@@ -1,6 +1,6 @@
 <?php
 
-namespace Octopy\Tests;
+namespace Octopy\Tests\Feature;
 
 use Octopy\L3D\DomainInfo;
 use Octopy\L3D\Util;

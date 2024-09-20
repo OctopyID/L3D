@@ -32,7 +32,7 @@ class Domain
         $providers = [];
 
         collect($this->domains())->each(function (DomainInfo $domain) use (&$providers) {
-            $providers[] = $domain->providers();
+            $providers = array_merge($providers, $domain->providers());
         });
 
         return $providers;
