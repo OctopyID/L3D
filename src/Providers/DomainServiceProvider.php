@@ -5,6 +5,7 @@ namespace Octopy\L3D\Providers;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Octopy\L3D\Console\Commands\DomainMakeCommand;
 use Octopy\L3D\Domain;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -33,13 +34,27 @@ class DomainServiceProvider extends ServiceProvider
             $this->guessDomainFactory();
         }
 
-        $this->registerDomains();
+        $this
+            ->registerDomains()
+            ->registerCommand();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerCommand() : void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DomainMakeCommand::class,
+            ]);
+        }
     }
 
     /**
      * @throws BindingResolutionException
      */
-    private function registerDomains() : void
+    private function registerDomains() : self
     {
         /**
          * @var $domain Domain
@@ -51,6 +66,8 @@ class DomainServiceProvider extends ServiceProvider
         foreach ($domain->providers() as $provider) {
             $this->app->register($provider);
         }
+
+        return $this;
     }
 
     /**
