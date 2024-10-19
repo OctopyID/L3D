@@ -2,6 +2,9 @@
 
 L3D stands for Laravel Domain-Driven Design
 
+> [!CAUTION]
+> This package is in very slow development and is very far from what is expected, do not use it in production.
+
 ## Security
 
 If you discover any security related issues, please email [bug@octopy.dev](mailto:bug@octopy.dev) instead of using the issue

@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": "^8.3",
-        "illuminate/contracts": "^v11",
-        "illuminate/support": "^v11"
+        "illuminate/contracts": "^11"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.4"
+        "orchestra/testbench": "^9.4",
+        "pestphp/pest": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +29,7 @@
     "autoload-dev": {
         "psr-4": {
             "Octopy\\Tests\\": "tests/",
-            "Workbench\\App\\": "tests/workbench/app/"
+            "App\\": "laravel/app"
         }
     },
     "extra": {
@@ -46,7 +46,10 @@
         ]
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

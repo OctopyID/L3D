@@ -1,8 +1,6 @@
 <?php
 
-namespace Octopy\L3D;
-
-use Illuminate\Support\Facades\App;
+namespace Octopy\L3D\Support;
 
 class Util
 {

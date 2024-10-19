@@ -6,19 +6,16 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Octopy\L3D\Providers\DomainServiceProvider;
+use function Orchestra\Testbench\package_path;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
-     * @return void
+     * @return string
      */
-    protected function setUp() : void
+    public static function applicationBasePath() : string
     {
-        parent::setUp();
-
-        App::setBasePath(
-            __DIR__ . '/Laravel'
-        );
+        return package_path('laravel');
     }
 
     /**
