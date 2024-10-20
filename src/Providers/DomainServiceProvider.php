@@ -67,7 +67,21 @@ class DomainServiceProvider extends ServiceProvider
             $this->app->register($provider);
         }
 
+        $this->registerFilament($domain);
+
         return $this;
+    }
+
+    /**
+     * @param  Domain $domain
+     */
+    private function registerFilament(Domain $domain) : void
+    {
+        if (class_exists(\Filament\Panel::class)) {
+            \Filament\Panel::macro('discoverAllFromDomain', function () use ($domain) : \Filament\Panel {
+                return $domain->filament($this);
+            });
+        }
     }
 
     /**

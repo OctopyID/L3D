@@ -2,7 +2,9 @@
 
 namespace Octopy\L3D;
 
+use Filament\Panel;
 use Octopy\L3D\Finder\Finder;
+use Octopy\L3D\Support\Util;
 
 class Domain
 {
@@ -59,5 +61,21 @@ class Domain
         });
 
         return $migrations;
+    }
+
+    /**
+     * @param  Panel $panel
+     * @return Panel
+     */
+    public function filament(Panel $panel) : Panel
+    {
+        collect($this->domains())->each(function (DomainInfo $domain) use (&$panel) {
+            $panel->discoverPages($domain->path('Filament/Pages'), Util::getClass($domain->path('Filament/Pages')));
+            $panel->discoverWidgets($domain->path('Filament/Widgets'), Util::getClass($domain->path('Filament/Widgets')));
+            $panel->discoverClusters($domain->path('Filament/Clusters'), Util::getClass($domain->path('Filament/Clusters')));
+            $panel->discoverResources($domain->path('Filament/Resources'), Util::getClass($domain->path('Filament/Resources')));
+        });
+
+        return $panel;
     }
 }
