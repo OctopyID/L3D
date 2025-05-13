@@ -1,0 +1,59 @@
+{
+    "name": "octopy/l3d",
+    "version": "1.0.0",
+    "description": "Laravel Domain Design Pattern",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Supian M",
+            "email": "supianidz@octopy.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^12.0"
+    },
+    "require-dev": {
+        "octopy/debugify": "dev-main",
+        "orchestra/testbench": "^10.2",
+        "symfony/var-dumper": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopy\\L3D\\": "src/"
+        },
+        "files": [
+            "src/Support/Helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Octopy\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Octopy\\L3D\\Providers\\L3DServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/testbench package:test",
+        "lint": [
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
