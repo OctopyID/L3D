@@ -36,7 +36,6 @@ class CacheTest extends TestCase
         $this->cacheDir = storage_path('framework/cache');
         $this->cachePath = storage_path('framework/cache/l3d.json');
 
-        // Bersihkan cache sebelum setiap test
         if (file_exists($this->cachePath)) {
             unlink($this->cachePath);
         }
@@ -47,7 +46,6 @@ class CacheTest extends TestCase
      */
     protected function tearDown() : void
     {
-        // Bersihkan cache setelah setiap test
         if (file_exists($this->cachePath)) {
             unlink($this->cachePath);
         }
@@ -112,16 +110,13 @@ class CacheTest extends TestCase
     #[Test]
     public function canCreateCacheDirectoryIfNotExists()
     {
-        // Hapus direktori cache jika ada
         if (is_dir($this->cacheDir)) {
             rmdir($this->cacheDir);
         }
 
-        $domains = [
+        $this->cache->put([
             new Domain('App\\Test', '/path/to/test'),
-        ];
-
-        $this->cache->put($domains);
+        ]);
 
         $this->assertDirectoryExists($this->cacheDir);
         $this->assertFileExists($this->cachePath);
@@ -134,11 +129,9 @@ class CacheTest extends TestCase
     #[Test]
     public function canClearCache()
     {
-        // Buat file cache terlebih dahulu
-        $domains = [
+        $this->cache->put([
             new Domain('App\\Test', '/path/to/test'),
-        ];
-        $this->cache->put($domains);
+        ]);
 
         $this->assertTrue($this->cache->exists());
 

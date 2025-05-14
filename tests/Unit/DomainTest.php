@@ -41,7 +41,9 @@ class DomainTest extends TestCase
     public function canConvertToArray()
     {
         $domain = new Domain('App\Test', '/test/path');
-        $domain->providers = ['TestProvider'];
+        $domain->providers = [
+            'TestProvider',
+        ];
 
         $result = $domain->toArray();
 
@@ -54,10 +56,10 @@ class DomainTest extends TestCase
 
         $this->assertEquals($expectedArray, $result);
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('realpath', $result);
-        $this->assertArrayHasKey('namespace', $result);
-        $this->assertArrayHasKey('providers', $result);
-        $this->assertArrayHasKey('migration', $result);
+
+        foreach ($expectedArray as $key => $value) {
+            $this->assertArrayHasKey($key, $result);
+        }
     }
 
     /**
