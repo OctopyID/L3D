@@ -1,6 +1,6 @@
 <?php
 
-namespace Octopy\L3D;
+namespace Octopy\L3D\Exceptions;
 
 use Exception;
 

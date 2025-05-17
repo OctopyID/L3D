@@ -1,10 +1,10 @@
 <?php
 
-namespace Octopy\Tests\Feature;
+namespace Octopy\Tests\Feature\Filesystem;
 
 use Octopy\L3D\Domain;
+use Octopy\L3D\Exceptions\L3DCacheException;
 use Octopy\L3D\Filesystem\Cache;
-use Octopy\L3D\L3DCacheException;
 use Octopy\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 

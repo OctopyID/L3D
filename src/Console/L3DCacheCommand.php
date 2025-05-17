@@ -4,8 +4,8 @@ namespace Octopy\L3D\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Octopy\L3D\Exceptions\L3DCacheException;
 use Octopy\L3D\L3D;
-use Octopy\L3D\L3DCacheException;
 
 class L3DCacheCommand extends Command
 {

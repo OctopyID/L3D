@@ -3,7 +3,7 @@
 namespace Octopy\L3D\Filesystem;
 
 use Octopy\L3D\Domain;
-use Octopy\L3D\L3DCacheException;
+use Octopy\L3D\Exceptions\L3DCacheException;
 
 class Cache
 {

@@ -3,6 +3,7 @@
 namespace Octopy\L3D;
 
 use Closure;
+use Octopy\L3D\Exceptions\L3DCacheException;
 use Octopy\L3D\Filesystem\Cache;
 use Octopy\L3D\Filesystem\Finder;
 
