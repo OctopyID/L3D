@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbench\App\Providers;
+namespace Workbench\App\Foundation\Providers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
@@ -13,7 +13,7 @@ class WorkbenchServiceProvider extends ServiceProvider
     public function register() : void
     {
         l3d()->register([
-            'Workbench\\App\\Domain\\' => 'workbench/app/Domain',
+            'Workbench\\App\\Domain\\' => app_path('Domain'),
         ]);
     }
 }
