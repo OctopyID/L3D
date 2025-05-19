@@ -20,19 +20,18 @@ class L3D
     protected array $domains = [];
 
     /**
+     * @var Cache
+     */
+    protected Cache $cache {
+        get => new Cache();
+    }
+
+    /**
      * @param  array $psr4
      */
     public function __construct(array $psr4 = [])
     {
         $this->register($psr4);
-    }
-
-    /**
-     * @return Cache
-     */
-    public function cache() : Cache
-    {
-        return new Cache;
     }
 
     /**
@@ -65,7 +64,7 @@ class L3D
     public function providers() : array
     {
         $providers = [];
-        foreach ($this->domains as $domain) {
+        foreach ($this->domains() as $domain) {
             $providers = array_merge($providers, $domain->providers);
         }
 
@@ -79,7 +78,7 @@ class L3D
     public function migrations(bool $strict = false) : array
     {
         $migrations = [];
-        foreach ($this->domains as $domain) {
+        foreach ($this->domains() as $domain) {
             // when strict, then make sure the directory is available
             if ($strict && ! is_dir($domain->migration)) {
                 continue;
@@ -99,8 +98,8 @@ class L3D
     public function bootstrap(Closure $callback) : void
     {
         // load domains from cache if exists
-        if ($this->cache()->exists()) {
-            $this->domains = $this->cache()->get();
+        if ($this->cache->exists()) {
+            $this->domains = $this->cache->get();
         } else {
             // try to find domains within the registered namespaces
             foreach ($this->psr4 as $namespace => $location) {
