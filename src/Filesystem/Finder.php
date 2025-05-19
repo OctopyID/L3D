@@ -3,6 +3,7 @@
 namespace Octopy\L3D\Filesystem;
 
 use Illuminate\Support\ServiceProvider;
+use Octopy\L3D\Contracts\L3DExcludable;
 use Octopy\L3D\Domain;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -59,7 +60,7 @@ class Finder
         foreach ($files as $file) {
             $provider = $domain->namespace . '\\Providers\\' . $file->getBasename('.php');
 
-            if (is_subclass_of($provider, ServiceProvider::class)) {
+            if (is_subclass_of($provider, ServiceProvider::class) && ! is_subclass_of($provider, L3DExcludable::class)) {
                 $providers[] = $provider;
             }
         }
