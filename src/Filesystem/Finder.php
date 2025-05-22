@@ -57,8 +57,13 @@ class Finder
 
         $files = $this->finder->in($domain->path('Providers'))->files();
 
+        $files = new SymfonyFinder()->in($domain->path('Providers'))->files();
+
         foreach ($files as $file) {
-            $provider = $domain->namespace . '\\Providers\\' . $file->getBasename('.php');
+            $relatives = $file->getRelativePath();
+            $namespace = $relatives ? str_replace('/', '\\', $relatives) . '\\' : '';
+
+            $provider = $domain->namespace . '\\Providers\\' . $namespace . $file->getBasename('.php');
 
             if (is_subclass_of($provider, ServiceProvider::class) && ! is_subclass_of($provider, L3DExcludable::class)) {
                 $providers[] = $provider;
