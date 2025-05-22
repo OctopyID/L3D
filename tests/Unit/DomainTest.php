@@ -29,7 +29,7 @@ class DomainTest extends TestCase
     {
         $domain = new Domain('App\Test', '/base/path');
 
-        $result = $domain->path('controllers');
+        $result = $domain->basepath('controllers');
 
         $this->assertEquals('/base/path/controllers', $result);
     }

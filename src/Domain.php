@@ -22,16 +22,29 @@ class Domain implements Arrayable
      */
     public function __construct(public string $namespace, public string $realpath)
     {
-        $this->migration = $this->path('Database/Migrations');
+        $this->migration = $this->basepath('Database/Migrations');
     }
 
     /**
      * @param  string $path
      * @return string
      */
-    public function path(string $path) : string
+    public function basepath(string $path) : string
     {
         return $this->realpath . '/' . $path;
+    }
+
+    /**
+     * @param  string|null $namespace
+     * @return string
+     */
+    public function namespace(string|null $namespace = null) : string
+    {
+        if (is_null($namespace)) {
+            return $this->namespace;
+        }
+
+        return $this->namespace . '\\' . $namespace;
     }
 
     /**

@@ -51,13 +51,13 @@ class Finder
     private function findServiceProviders(Domain $domain) : array
     {
         $providers = [];
-        if (! is_dir($domain->path('Providers'))) {
+        if (! is_dir($domain->basepath('Providers'))) {
             return [];
         }
 
-        $files = $this->finder->in($domain->path('Providers'))->files();
+        $files = $this->finder->in($domain->basepath('Providers'))->files();
 
-        $files = new SymfonyFinder()->in($domain->path('Providers'))->files();
+        $files = new SymfonyFinder()->in($domain->basepath('Providers'))->files();
 
         foreach ($files as $file) {
             $relatives = $file->getRelativePath();
