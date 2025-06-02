@@ -1,0 +1,17 @@
+laravel: './workbench'
+
+providers:
+  - Octopy\L3D\Providers\L3DServiceProvider
+  - Workbench\App\Foundation\Providers\WorkbenchServiceProvider
+
+migrations:
+  - workbench/database/migrations
+
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+
+workbench:
+  build:
+    - create-sqlite-db
+    - db-wipe
+    - migrate-fresh
