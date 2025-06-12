@@ -3,6 +3,7 @@
 namespace Octopy\L3D\Providers;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Octopy\L3D\Console\L3DCacheCommand;
 use Octopy\L3D\Console\L3DClearCommand;
@@ -71,7 +72,11 @@ class L3DServiceProvider extends ServiceProvider
      */
     private function guessDomainFactory() : void
     {
-        Factory::guessFactoryNamesUsing(function ($name) {
+        Gate::guessPolicyNamesUsing(function (string $name) {
+            return str_replace('Models', 'Policies', $name) . 'Policy';
+        });
+
+        Factory::guessFactoryNamesUsing(function (string $name) {
             return str_replace('Models', 'Database\\Factories', $name) . 'Factory';
         });
     }
