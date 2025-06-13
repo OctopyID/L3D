@@ -1,6 +1,5 @@
 {
-    "name": "octopy/l3d",
-    "version": "1.0.0",
+    "name": "octopyid/l3d",
     "description": "Laravel Domain Design Pattern",
     "type": "library",
     "license": "MIT",
