@@ -61,6 +61,19 @@ class L3D
     /**
      * @return array
      */
+    public function policies() : array
+    {
+        $policies = [];
+        foreach ($this->domains() as $domain) {
+            $policies = array_merge($policies, $domain->policies);
+        }
+
+        return $policies;
+    }
+
+    /**
+     * @return array
+     */
     public function providers() : array
     {
         $providers = [];

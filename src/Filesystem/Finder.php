@@ -35,6 +35,7 @@ class Finder
 
         foreach ($results as $spl) {
             $domain = tap(new Domain($this->getNamespace($spl), $spl->getRealPath()), function (Domain $domain) {
+                $domain->policies = $this->findModelPolicies($domain);
                 $domain->providers = $this->findServiceProviders($domain);
             });
 
@@ -48,14 +49,42 @@ class Finder
      * @param  Domain $domain
      * @return array
      */
+    private function findModelPolicies(Domain $domain) : array
+    {
+        if (! is_dir($domain->basepath('Models'))) {
+            return [];
+        }
+
+        $policies = [];
+
+        $files = new SymfonyFinder()->in($domain->basepath('Models'))->files();
+
+        foreach ($files as $file) {
+            $relatives = $file->getRelativePath();
+            $namespace = $relatives ? str_replace('/', '\\', $relatives) . '\\' : '';
+
+            $model = $domain->namespace . '\\Models\\' . $namespace . $file->getBasename('.php');
+
+            $policy = str_replace('Models', 'Policies', $model) . 'Policy';
+
+            if (class_exists($policy)) {
+                $policies[$model] = $policy;
+            }
+        }
+
+        return $policies;
+    }
+
+    /**
+     * @param  Domain $domain
+     * @return array
+     */
     private function findServiceProviders(Domain $domain) : array
     {
         $providers = [];
         if (! is_dir($domain->basepath('Providers'))) {
             return [];
         }
-
-        $files = $this->finder->in($domain->basepath('Providers'))->files();
 
         $files = new SymfonyFinder()->in($domain->basepath('Providers'))->files();
 

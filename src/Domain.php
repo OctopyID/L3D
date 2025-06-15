@@ -9,6 +9,11 @@ class Domain implements Arrayable
     /**
      * @var array
      */
+    public array $policies = [];
+
+    /**
+     * @var array
+     */
     public array $providers = [];
 
     /**
