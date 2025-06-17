@@ -51,6 +51,15 @@ class L3D
     }
 
     /**
+     * @param  string $name
+     * @return Domain
+     */
+    public function domain(string $name) : Domain
+    {
+        return $this->domains[$name];
+    }
+
+    /**
      * @return Domain[]
      */
     public function domains() : array
