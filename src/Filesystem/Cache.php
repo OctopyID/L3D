@@ -14,7 +14,7 @@ class Cache
      */
     public function __construct()
     {
-        $this->path = storage_path('framework/cache/l3d.json');
+        $this->path = base_path('bootstrap/cache/l3d.php');
     }
 
     /**
@@ -37,12 +37,9 @@ class Cache
             );
         }
 
-        $data = json_decode(file_get_contents($this->path), true);
-
-        return
-            array_map(function (array $row) {
-                return new Domain($row['namespace'], $row['realpath']);
-            }, $data);
+        return once(function () {
+            return array_map(static fn(array $row) => new Domain()->fromArray($row), require $this->path);
+        });
     }
 
     /**
@@ -58,8 +55,8 @@ class Cache
             $data[$domain->namespace] = $domain->toArray();
         }
 
-        if (! is_dir(storage_path('framework/cache'))) {
-            $created = mkdir(storage_path('framework/cache'), 0777, true);
+        if (! is_dir(base_path('bootstrap/cache'))) {
+            $created = mkdir(base_path('bootstrap/cache'), 0777, true);
 
             if (! $created) {
                 throw new L3DCacheException(
@@ -69,7 +66,7 @@ class Cache
         }
 
         return
-            file_put_contents($this->path, json_encode($data, JSON_PRETTY_PRINT));
+            file_put_contents($this->path, '<?php return ' . var_export($data, true) . ';');
     }
 
     /**
