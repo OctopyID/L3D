@@ -25,10 +25,10 @@ class L3DCacheCommand extends Command
      */
     public function handle() : void
     {
-        l3d()->cache()->clear();
+        l3d()->cache->clear();
 
         l3d()->bootstrap(function (L3D $l3d) {
-            $l3d->cache()->put($l3d->domains());
+            $l3d->cache->put($l3d->domains());
         });
 
         $this->components->info('Domain cached successfully.');

@@ -55,6 +55,8 @@ class L3DServiceProvider extends ServiceProvider
                 L3DCacheCommand::class,
                 L3DClearCommand::class,
             ]);
+
+            $this->optimizes('l3d:cache', 'l3d:clear', 'l3d');
         }
     }
 
@@ -72,11 +74,11 @@ class L3DServiceProvider extends ServiceProvider
      */
     private function guessDomainFactory() : void
     {
-        Gate::guessPolicyNamesUsing(function (string $name) {
+        Gate::guessPolicyNamesUsing(static function (string $name) {
             return str_replace('Models', 'Policies', $name) . 'Policy';
         });
 
-        Factory::guessFactoryNamesUsing(function (string $name) {
+        Factory::guessFactoryNamesUsing(static function (string $name) {
             return str_replace('Models', 'Database\\Factories', $name) . 'Factory';
         });
     }

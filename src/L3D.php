@@ -22,7 +22,7 @@ class L3D
     /**
      * @var Cache
      */
-    protected Cache $cache {
+    public Cache $cache {
         get => new Cache();
     }
 

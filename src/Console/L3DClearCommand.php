@@ -22,7 +22,7 @@ class L3DClearCommand extends Command
      */
     public function handle() : void
     {
-        l3d()->cache()->clear();
+        l3d()->cache->clear();
 
         $this->components->info('Domain cache cleared successfully.');
     }
