@@ -14,7 +14,7 @@ class Cache
      */
     public function __construct()
     {
-        $this->path = base_path('bootstrap/cache/l3d.php');
+        $this->path = base_path('bootstrap/cache/octopyid/l3d.php');
     }
 
     /**
@@ -55,8 +55,8 @@ class Cache
             $data[$domain->namespace] = $domain->toArray();
         }
 
-        if (! is_dir(base_path('bootstrap/cache'))) {
-            $created = mkdir(base_path('bootstrap/cache'), 0777, true);
+        if (! is_dir(dirname($this->path))) {
+            $created = mkdir(dirname($this->path), 0777, true);
 
             if (! $created) {
                 throw new L3DCacheException(
